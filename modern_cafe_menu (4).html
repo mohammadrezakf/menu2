@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کافه آروما - منوی دیجیتال پیشرفته</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #CD853F;
+            --light-bg: rgba(255, 248, 220, 0.95);
+            --dark-bg: rgba(139, 69, 19, 0.9);
+            --text-color: #8B4513;
+            --success-color: #22c55e;
+            --shadow: 0 10px 40px rgba(139, 69, 19, 0.2);
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 25%, #CD853F 50%, #F4E4BC 75%, #8B4513 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 248, 220, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Header */
+        .header {
+            background: var(--light-bg);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: var(--light-bg);
+            backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid rgba(139, 69, 19, 0.2);
+            border-radius: 25px;
+            background: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .cart-toggle {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cart-toggle:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .menu-section {
+            flex: 1;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item {
+            background: var(--light-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--secondary-color);
+            box-shadow: 0 20px 60px rgba(139, 69, 19, 0.3);
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover .item-image {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            line-height: 1.4;
+        }
+
+        .item-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-shadow: 0 2px 4px rgba(210, 105, 30, 0.3);
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--secondary-color);
+            background: white;
+            color: var(--secondary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .qty-display {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .add-to-cart {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: var(--light-bg);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 40px rgba(139, 69, 19, 0.3);
+            transition: right 0.4s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            border-left: 2px solid var(--secondary-color);
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            background: var(--light-bg);
+            backdrop-filter: blur(20px);
+        }
+
+        .cart-header h3 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            float: left;
+        }
+
+        .cart-content {
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
+        }
+
+        .cart-item-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .cart-summary {
+            border-top: 2px solid var(--secondary-color);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .checkout-form {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(139, 69, 19, 0.2);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Special Effects */
+        .special-offer {
+            position: relative;
+        }
+
+        .special-offer::after {
+            content: '⭐ پیشنهاد ویژه';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ef4444;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--success-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            z-index: 2000;
+        }
+
+        .success-message.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .nav-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Dark Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        محصول با موفقیت به سبد خرید اضافه شد! 🎉
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>کافه آروما</h1>
+        <p>طعمی که در خاطرتان خواهد ماند ✨</p>
+    </header>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <div class="nav-controls">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="جستجو در منو..." id="searchInput">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">همه محصولات</button>
+                <button class="filter-btn" data-category="espresso">اسپرسوبار</button>
+                <button class="filter-btn" data-category="cold">آیس بار</button>
+                <button class="filter-btn" data-category="hot">بار گرم</button>
+                <button class="filter-btn" data-category="shake">شیک بار</button>
+                <button class="filter-btn" data-category="tea">تی بار</button>
+                <button class="filter-btn" data-category="frappe">فراپه</button>
+                <button class="filter-btn" data-category="food">غذا و دسر</button>
+            </div>
+
+            <button class="cart-toggle" id="cartToggle">
+                🛒 سبد خرید
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Menu Section -->
+        <div class="menu-section">
+            <div id="menuContainer">
+                <!-- Menu items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <button class="close-cart" id="closeCart">✕</button>
+            <h3>🛒 سبد خرید شما</h3>
+        </div>
+        
+        <div class="cart-content">
+            <div id="cartItems"></div>
+            
+            <div class="cart-summary">
+                <div class="total-price" id="totalPrice">
+                    مجموع: ۰ تومان
+                </div>
+                
+                <div class="checkout-form">
+                    <h4 style="color: var(--text-color); margin-bottom: 15px;">📞 اطلاعات تماس</h4>
+                    
+                    <div class="form-group">
+                        <label>نام و نام خانوادگی:</label>
+                        <input type="text" id="customerName" placeholder="نام خود را وارد کنید">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>شماره تماس:</label>
+                        <input type="tel" id="customerPhone" placeholder="09xxxxxxxxx">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>آدرس تحویل:</label>
+                        <textarea id="customerAddress" rows="3" placeholder="آدرس کامل خود را وارد کنید"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>زمان تحویل:</label>
+                        <select id="deliveryTime">
+                            <option value="">انتخاب زمان</option>
+                            <option value="asap">در اسرع وقت</option>
+                            <option value="30min">۳۰ دقیقه دیگر</option>
+                            <option value="1hour">۱ ساعت دیگر</option>
+                            <option value="2hour">۲ ساعت دیگر</option>
+                            <option value="custom">زمان دلخواه</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>توضیحات اضافی:</label>
+                        <textarea id="orderNotes" rows="2" placeholder="توضیحات خاص (اختیاری)"></textarea>
+                    </div>
+                </div>
+                
+                <button class="checkout-btn" id="checkoutBtn">
+                    🚀 ثبت سفارش نهایی
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <script>
+        // Menu Data
+        const menuData = {
+            espresso: [
+                {id: 1, name: 'اسپرسو ربوستا', price: 60000, description: 'قهوه قوی و پرکافئین با طعم تلخ', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop', special: true},
+                {id: 2, name: 'اسپرسو عربیکا', price: 70000, description: 'قهوه نرم و معطر با طعم ملایم', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop'},
+                {id: 3, name: 'آمریکانو', price: 60000, description: 'اسپرسو رقیق شده با آب گرم', image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=200&h=200&fit=crop'},
+                {id: 4, name: 'لاته', price: 80000, description: 'اسپرسو با شیر بخارپز', image: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?w=200&h=200&fit=crop'},
+                {id: 5, name: 'لاته دارچین', price: 90000, description: 'لاته معطر با پودر دارچین', image: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?w=200&h=200&fit=crop'},
+                {id: 6, name: 'کارامل ماکیاتو', price: 90000, description: 'اسپرسو با سیروپ کارامل', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200&h=200&fit=crop'},
+                {id: 7, name: 'کاپوچینو', price: 70000, description: 'اسپرسو با فوم شیر ضخیم', image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200&h=200&fit=crop'},
+                {id: 8, name: 'موکا', price: 90000, description: 'قهوه با شکلات و خامه', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop'},
+                {id: 9, name: 'آفوگاتو', price: 90000, description: 'بستنی وانیلی با اسپرسو', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=200&h=200&fit=crop'}
+            ],
+            cold: [
+                {id: 10, name: 'آیس لاته', price: 85000, description: 'لاته سرد با یخ و شیر', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200&h=200&fit=crop', special: true},
+                {id: 11, name: 'آیس کارامل ماکیاتو', price: 95000, description: 'ماکیاتو سرد با کارامل', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200&h=200&fit=crop'},
+                {id: 12, name: 'آیس موکا', price: 95000, description: 'موکا سرد با شکلات', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=200&h=200&fit=crop'},
+                {id: 13, name: 'آیس چاکلت', price: 85000, description: 'شکلات سرد با یخ و کرم', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&h=200&fit=crop'},
+                {id: 14, name: 'آیس آمریکانو', price: 60000, description: 'آمریکانو سرد با یخ', image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=200&h=200&fit=crop'},
+                {id: 15, name: 'موهیتو', price: 90000, description: 'نوشیدنی تازه با نعناع و لیمو', image: 'https://images.unsplash.com/photo-1541697800-3f40d97d29b7?w=200&h=200&fit=crop'},
+                {id: 16, name: 'موهیتو توت فرنگی', price: 110000, description: 'موهیتو با طعم توت فرنگی', image: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=200&h=200&fit=crop'},
+                {id: 17, name: 'اسموتی فصل', price: 95000, description: 'اسموتی میوه‌های فصل', image: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=200&h=200&fit=crop'}
+            ],
+            hot: [
+                {id: 18, name: 'هات چاکلت', price: 80000, description: 'شکلات داغ کلاسیک', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&h=200&fit=crop', special: true},
+                {id: 19, name: 'هات چاکلت توت فرنگی', price: 90000, description: 'شکلات داغ با طعم توت', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&h=200&fit=crop'},
+                {id: 20, name: 'ماسالا', price: 80000, description: 'چای ادویه‌ای هندی', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 21, name: 'شیر نوتلا', price: 110000, description: 'شیر داغ با نوتلا', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 22, name: 'شیر لوتوس', price: 110000, description: 'شیر داغ با بیسکویت لوتوس', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'}
+            ],
+            shake: [
+                {id: 23, name: 'شیک وانیل', price: 100000, description: 'میلک شیک وانیلی کلاسیک', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop', special: true},
+                {id: 24, name: 'وانیل موز', price: 130000, description: 'شیک وانیل با موز تازه', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 25, name: 'وانیل توت فرنگی', price: 130000, description: 'شیک وانیل با توت فرنگی', image: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=200&h=200&fit=crop'},
+                {id: 26, name: 'شیک قهوه', price: 110000, description: 'میلک شیک قهوه', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 27, name: 'شیک شکلات', price: 100000, description: 'میلک شیک شکلاتی', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 28, name: 'موز شکلات', price: 130000, description: 'شیک شکلات با موز', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 29, name: 'شکلات توت فرنگی', price: 140000, description: 'شیک شکلات با توت', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 30, name: 'شیک نوتلا', price: 160000, description: 'میلک شیک نوتلا', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 31, name: 'شیک پروتئین', price: 210000, description: 'میلک شیک پروتئینی', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 32, name: 'شیک لوتوس', price: 150000, description: 'میلک شیک بیسکویت لوتوس', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 33, name: 'شیک اوریو', price: 140000, description: 'میلک شیک اوریو', image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=200&h=200&fit=crop'},
+                {id: 34, name: 'شیک بادام زمینی', price: 120000, description: 'میلک شیک بادام زمینی', image: 'https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=200&h=200&fit=crop'},
+                {id: 35, name: 'شیک بیسکوئیت', price: 115000, description: 'میلک شیک بیسکویتی', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop'}
+            ],
+            tea: [
+                {id: 36, name: 'چای سیاه', price: 40000, description: 'چای سیاه کلاسیک', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop', special: true},
+                {id: 37, name: 'چای سبز', price: 50000, description: 'چای سبز طبیعی', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 38, name: 'چای زعفران', price: 60000, description: 'چای معطر با زعفران اصل', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 39, name: 'چای کوهی', price: 50000, description: 'چای کوهی گیاهی', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 40, name: 'دمنوش آرامش', price: 70000, description: 'دمنوش گیاهی آرام‌بخش', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 41, name: 'دمنوش سلامت', price: 70000, description: 'دمنوش گیاهی طبیعی', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 42, name: 'دمنوش به و سیب', price: 70000, description: 'دمنوش طعم دار به و سیب', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'},
+                {id: 43, name: 'دمنوش بهار نارنج', price: 60000, description: 'دمنوش معطر بهار نارنج', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=200&h=200&fit=crop'}
+            ],
+            frappe: [
+                {id: 44, name: 'فراپه کارامل', price: 110000, description: 'فراپه قهوه با کارامل', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200&h=200&fit=crop', special: true},
+                {id: 45, name: 'فراپه شکلات', price: 110000, description: 'فراپه قهوه با شکلات', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=200&h=200&fit=crop'},
+                {id: 46, name: 'فراپه بادام', price: 120000, description: 'فراپه قهوه با بادام', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=200&h=200&fit=crop'},
+                {id: 47, name: 'فراپه اورئو', price: 110000, description: 'فراپه قهوه با اوریو', image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=200&h=200&fit=crop'},
+                {id: 48, name: 'فراپه لوتوس', price: 130000, description: 'فراپه قهوه با لوتوس', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=200&h=200&fit=crop'},
+                {id: 49, name: 'کمکس', price: 100000, description: 'قهوه دم‌آوری کمکس', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop'},
+                {id: 50, name: 'فرنچ پرس', price: 75000, description: 'قهوه فرنچ پرس', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop'},
+                {id: 51, name: 'قهوه ترک', price: 60000, description: 'قهوه ترک سنتی', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop'}
+            ],
+            food: [
+                {id: 52, name: 'وافل VIP', price: 200000, description: 'وافل ویژه با تزئینات کامل', image: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=200&h=200&fit=crop', special: true},
+                {id: 53, name: 'وافل نوتلا', price: 150000, description: 'وافل تازه با نوتلا', image: 'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=200&h=200&fit=crop'},
+                {id: 54, name: 'اسنک مرغ', price: 115000, description: 'ساندویچ گرم مرغ', image: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=200&h=200&fit=crop'},
+                {id: 55, name: 'اسنک گوشت', price: 140000, description: 'ساندویچ گرم گوشت', image: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=200&h=200&fit=crop'},
+                {id: 56, name: 'کیک شکلاتی', price: 85000, description: 'کیک شکلاتی تازه روز', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=200&h=200&fit=crop'},
+                {id: 57, name: 'کوکی پسته', price: 35000, description: 'کوکی خانگی با پسته', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop'},
+                {id: 58, name: 'کوکی رژیمی', price: 40000, description: 'کوکی کم کالری', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop'},
+                {id: 59, name: 'کوکی مغزدار', price: 35000, description: 'کوکی با مغزیجات', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop'},
+                {id: 60, name: 'کوکی شکلاتی', price: 35000, description: 'کوکی با تکه‌های شکلات', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop'},
+                {id: 61, name: 'کوکی گردویی', price: 35000, description: 'کوکی با گردو', image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop'},
+                {id: 62, name: 'آب پرتقال طبیعی', price: 45000, description: 'آب پرتقال تازه', image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=200&h=200&fit=crop'}
+            ]
+        };
+
+        // Application State
+        let cart = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        // DOM Elements
+        const menuContainer = document.getElementById('menuContainer');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const cartToggle = document.getElementById('cartToggle');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const totalPrice = document.getElementById('totalPrice');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const successMessage = document.getElementById('successMessage');
+        const themeToggle = document.getElementById('themeToggle');
+
+        // Initialize App
+        function init() {
+            createParticles();
+            renderMenu();
+            bindEvents();
+            updateCartUI();
+        }
+
+        // Create Animated Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = particle.style.height = Math.random() * 20 + 10 + 'px';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Render Menu
+        function renderMenu() {
+            const allItems = Object.values(menuData).flat();
+            const filteredItems = allItems.filter(item => {
+                const matchesCategory = currentFilter === 'all' || 
+                    Object.keys(menuData).find(key => menuData[key].includes(item)) === currentFilter;
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            menuContainer.innerHTML = '';
+
+            if (currentFilter === 'all') {
+                Object.keys(menuData).forEach(category => {
+                    const categoryItems = menuData[category].filter(item => 
+                        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        item.description.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                    
+                    if (categoryItems.length > 0) {
+                        const section = document.createElement('div');
+                        section.className = 'category-section';
+                        section.innerHTML = `
+                            <h2 class="category-title">${getCategoryTitle(category)}</h2>
+                            <div class="menu-grid">
+                                ${categoryItems.map(item => createMenuItemHTML(item)).join('')}
+                            </div>
+                        `;
+                        menuContainer.appendChild(section);
+                    }
+                });
+            } else {
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                section.innerHTML = `
+                    <h2 class="category-title">${getCategoryTitle(currentFilter)}</h2>
+                    <div class="menu-grid">
+                        ${filteredItems.map(item => createMenuItemHTML(item)).join('')}
+                    </div>
+                `;
+                menuContainer.appendChild(section);
+            }
+        }
+
+        function getCategoryTitle(category) {
+            const titles = {
+                espresso: '☕ اسپرسوبار',
+                cold: '🧊 آیس بار',
+                hot: '🔥 بار گرم',
+                shake: '🥤 شیک بار',
+                tea: '🍃 تی بار و دمنوش',
+                frappe: '🌀 فراپه و بار دمی',
+                food: '🍰 وافل و اسنک و دسر'
+            };
+            return titles[category] || 'همه محصولات';
+        }
+
+        function createMenuItemHTML(item) {
+            const quantity = getItemQuantity(item.id);
+            return `
+                <div class="menu-item ${item.special ? 'special-offer' : ''}" style="animation-delay: ${Math.random() * 0.5}s">
+                    <div class="item-header">
+                        <img src="${item.image}" alt="${item.name}" class="item-image">
+                        <div class="item-info">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-price">${item.price.toLocaleString()} ت</div>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                            <span class="qty-display">${quantity}</span>
+                            <button class="qty-btn" onclick="increaseQuantity(${item.id})">+</button>
+                            ${quantity > 0 ? `<button class="add-to-cart" onclick="addToCart(${item.id})">اضافه کن</button>` : `<button class="add-to-cart" onclick="addToCart(${item.id})">افزودن</button>`}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Cart Functions
+        function getItemQuantity(itemId) {
+            const cartItem = cart.find(item => item.id === itemId);
+            return cartItem ? cartItem.quantity : 0;
+        }
+
+        function increaseQuantity(itemId) {
+            const cartItem = cart.find(item => item.id === itemId);
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                const menuItem = Object.values(menuData).flat().find(item => item.id === itemId);
+                cart.push({ ...menuItem, quantity: 1 });
+            }
+            updateCartUI();
+            renderMenu();
+        }
+
+        function decreaseQuantity(itemId) {
+            const cartItemIndex = cart.findIndex(item => item.id === itemId);
+            if (cartItemIndex !== -1) {
+                if (cart[cartItemIndex].quantity > 1) {
+                    cart[cartItemIndex].quantity--;
+                } else {
+                    cart.splice(cartItemIndex, 1);
+                }
+            }
+            updateCartUI();
+            renderMenu();
+        }
+
+        function addToCart(itemId) {
+            increaseQuantity(itemId);
+            showSuccessMessage();
+        }
+
+        function showSuccessMessage() {
+            successMessage.classList.add('show');
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price.toLocaleString()} ت × ${item.quantity}</div>
+                    </div>
+                    <button class="qty-btn" onclick="decreaseQuantity(${item.id})" style="margin-right: 10px;">-</button>
+                </div>
+            `).join('');
+
+            totalPrice.textContent = `مجموع: ${totalAmount.toLocaleString()} تومان`;
+        }
+
+        // Event Bindings
+        function bindEvents() {
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                renderMenu();
+            });
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.category;
+                    renderMenu();
+                });
+            });
+
+            cartToggle.addEventListener('click', () => {
+                cartSidebar.classList.add('active');
+            });
+
+            closeCart.addEventListener('click', () => {
+                cartSidebar.classList.remove('active');
+            });
+
+            checkoutBtn.addEventListener('click', handleCheckout);
+
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Close cart when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!cartSidebar.contains(e.target) && !cartToggle.contains(e.target)) {
+                    cartSidebar.classList.remove('active');
+                }
+            });
+        }
+
+        function handleCheckout() {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+            const deliveryTime = document.getElementById('deliveryTime').value;
+            const notes = document.getElementById('orderNotes').value;
+
+            if (!name || !phone || !address || cart.length === 0) {
+                alert('لطفاً تمام فیلدهای ضروری را پر کنید و حداقل یک محصول سفارش دهید.');
+                return;
+            }
+
+            const orderDetails = {
+                items: cart,
+                customer: { name, phone, address, deliveryTime, notes },
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                orderTime: new Date().toLocaleString('fa-IR')
+            };
+
+            // Simulate order submission
+            alert(`سفارش شما با موفقیت ثبت شد! 🎉
+
+📋 جزئیات سفارش:
+👤 نام: ${name}
+📞 تلفن: ${phone}
+📍 آدرس: ${address}
+⏰ زمان تحویل: ${deliveryTime || 'در اسرع وقت'}
+💰 مبلغ کل: ${orderDetails.total.toLocaleString()} تومان
+
+📞 کافه آروما به زودی با شما تماس خواهد گرفت.
+شماره تماس: ۰۲۱-۲۲۲۵۶۸۷۶`);
+
+            // Clear cart and form
+            cart = [];
+            updateCartUI();
+            renderMenu();
+            cartSidebar.classList.remove('active');
+            
+            // Clear form
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+            document.getElementById('deliveryTime').value = '';
+            document.getElementById('orderNotes').value = '';
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+        }
+
+        // Make functions global for onclick handlers
+        window.increaseQuantity = increaseQuantity;
+        window.decreaseQuantity = decreaseQuantity;
+        window.addToCart = addToCart;
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
